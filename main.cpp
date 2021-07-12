@@ -1,3 +1,4 @@
+//gst-launch-1.0 -v rtspsrc location=rtsp://127.0.0.1:8554/test ! decodebin ! videoconvert ! autovideosink sync=true
 
 #include <gst/gst.h>
 
@@ -151,7 +152,7 @@ use
          * any launch line works as long as it contains elements named pay%d. Each
          * element with pay%d names will be a stream */
         factory = gst_rtsp_media_factory_new ();
-        gst_rtsp_media_factory_set_launch (factory, "(appsrc is-live=TRUE name=mysrc do-timestamp=TRUE ! qtdemux name=mdemux ! h264parse ! video/x-h264,stream-format=byte-stream  ! rtph264pay   name=pay0 pt=96 config-interval=1 )");
+        gst_rtsp_media_factory_set_launch (factory, "(appsrc is-live=TRUE name=mysrc do-timestamp=TRUE ! mpegpsdemux name=mdemux ! decodebin ! x264enc ! h264parse ! video/x-h264,stream-format=byte-stream  ! rtph264pay   name=pay0 pt=96 config-interval=1 )");
 
         /* notify when our media is ready, This is called whenever someone asks for
          * the media and a new pipeline with our appsrc is created */
